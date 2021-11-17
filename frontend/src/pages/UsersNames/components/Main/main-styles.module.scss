@@ -1,0 +1,17 @@
+@import "../../../../styles/colors.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2%;
+
+  font-size: 25px;
+  color: $black;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+}
