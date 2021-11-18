@@ -1,52 +1,55 @@
-import React from "react";
-import { useRecoilState } from "recoil";
+import React, { useState } from "react";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
-import { generate } from "../atom";
 import styles from "./main-styles.module.scss";
-import { ErrorMessage } from "../../../../components";
-import { fetchUser } from "../../../../services/requests";
+import { Button } from "../../../../components";
+
+type Props = {
+  email: string;
+  password: string;
+};
 
 export const Main: React.FC = () => {
-  const [state, setState] = useRecoilState(generate);
+  const schema = yup.object().shape({
+    email: yup
+      .string()
+      .email("Digite um email válido")
+      .required("Campo obrigatório"),
+    password: yup
+      .string()
+      .min(6, "senha de pelo menos 6 digitos")
+      .required("Campo obrigatório"),
+  });
+
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const [, setResult] = useState("");
   const history = useHistory();
 
-  const handleSubmit = () => {
-    const { name, email, password } = state;
-
-    if (!email || !password) {
-      setState({ ...state, error: true });
-      return;
-    } else {
-      setState({ ...state, error: false });
-      fetchUser(name, email);
-      ///history.push("/users");
-    }
+  const onSubmit = (user: Props): void => {
+    setResult(JSON.stringify(user));
+    history.push("/users/:id");
+    console.log(user);
   };
 
   return (
     <main className={styles.container}>
-      <form onSubmit={handleSubmit}>
-        {state.error && <ErrorMessage>Please Fill all the feilds</ErrorMessage>}
-        <p>Email</p>
+      <h2>Já tem conta? conecte-se aqui</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="email" {...register("email")} placeholder="Email" />
+        {formState.errors.email?.message}
         <input
-          type="text"
-          placeholder="Email"
-          value={state.email}
-          onChange={(event) =>
-            setState({ ...state, email: event.target.value })
-          }
-        />
-        <p>Senha</p>
-        <input
-          type="text"
+          type="password"
+          {...register("password")}
           placeholder="Password"
-          value={state.password}
-          onChange={(event) =>
-            setState({ ...state, password: event.target.value })
-          }
         />
-        <button>LOGIN</button>
+        {formState.errors.password?.message}
+        <Button title="Entrar" />
       </form>
     </main>
   );

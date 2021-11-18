@@ -15,7 +15,6 @@ export const Users: React.FC = () => {
       <Main
         name="Luiz Lima"
         email="email@example.com"
-        password="defpanmaster"
       />
       <Footer />
     </div>

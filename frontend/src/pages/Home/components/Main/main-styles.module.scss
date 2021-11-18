@@ -10,6 +10,10 @@
 
   color: $white;
 
+  h2 {
+    color: $black;
+  }
+  
   form {
     display: flex;
     flex-direction: column;
@@ -17,7 +21,7 @@
 
     border-radius: 0.3rem;
     box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.5);
-    
+
     background-color: $yellow;
     padding: 40px;
     margin: 10px;
@@ -29,24 +33,6 @@
       border-radius: 0.2rem;
       margin-bottom: 20px;
       color: $black;
-    }
-  }
-
-  button {
-    padding: 10px;
-    font-size: 30px;
-    margin: 10px;
-
-    border: none;
-    border-radius: 0.2rem;
-
-    color: $white;
-    background-color: $blue;
-
-    &:hover {
-      color: $blue;
-      background-color: $white;
-      transition: 0.5s;
     }
   }
 }

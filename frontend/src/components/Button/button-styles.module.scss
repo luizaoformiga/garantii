@@ -1,0 +1,19 @@
+@import "../../styles/colors.scss";
+
+.contentWrapper {
+  padding: 10px;
+  font-size: 30px;
+  margin: 10px;
+
+  border: none;
+  border-radius: 0.2rem;
+
+  color: $white;
+  background-color: $blue;
+
+  &:hover {
+    color: $blue;
+    background-color: $white;
+    transition: 0.5s;
+  }
+}

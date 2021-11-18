@@ -10,7 +10,7 @@ export const Home: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <Header title="JUNTE-SE A NÒS" />
+      <Header title="JUNTE-SE A NÓS" />
       <Main />
       <Footer />
     </div>

@@ -1,6 +1,15 @@
 @import "../../styles/colors.scss";
 
 .contentWrapper {
-  background-color: $blue;
+  background-color: $white;
   padding: 68px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  img {
+    color: $white;
+  }
 }

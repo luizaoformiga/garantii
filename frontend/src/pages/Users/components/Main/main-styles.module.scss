@@ -4,8 +4,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2%;
+  padding: 20px;
 
   font-size: 25px;
   color: $black;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    h2 {
+      color: $black;
+    }
+
+    p {
+      color: $grey;
+    }
+  }
 }

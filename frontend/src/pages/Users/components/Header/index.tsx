@@ -1,4 +1,6 @@
 import React from "react";
+import { AiOutlineArrowLeft } from "react-icons/ai";
+
 import styles from "./header-styles.module.scss";
 import { Logo } from "../../../../components";
 
@@ -13,7 +15,10 @@ export const Header: React.FC<Props> = ({ title, redirect }) => {
       <div>
         <Logo />
       </div>
-      <a href="/usernames">{title}</a>
+      <a href="/">
+        <AiOutlineArrowLeft className={styles.icon} />
+        <span>Sair</span>
+      </a>
     </header>
   );
 };

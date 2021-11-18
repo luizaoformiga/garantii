@@ -6,5 +6,7 @@ export const generate = atom({
     name: "",
     email: "",
     password: "",
+    sucess: false,
+    error: false,
   },
 });
