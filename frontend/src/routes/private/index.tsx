@@ -1,21 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { StoreContext } from "../../store/context";
+import { isAuthenticated } from "../../services/auth";
+import { Props } from "../repository";
 
-type Props = {
-  component: React.ComponentType<any>;
-  path: string;
-  exact?: boolean | undefined;
-};
 
-const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {
-  const { token } = useContext(StoreContext);
-  
+const PrivateRoute: React.FC<Props> = ({ component: Component, ...rest }) => {  
   return (
     <Route
       {...rest}
       render={(props) =>
-        token ? (
+        isAuthenticated() ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: "/", state: { from: props.location } }} />

@@ -1,29 +1,18 @@
 import React, { useState } from "react";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
 import styles from "./main-styles.module.scss";
 import { Button } from "../../../../components";
+import { schema } from "../../../../validations/login";
+import { Repository } from "../../../../store/ducks/repositories/types";
 
-type Props = {
-  email: string;
-  password: string;
-};
+interface StateProps {
+  repository?: Repository;
+}
 
-export const Main: React.FC = () => {
-  const schema = yup.object().shape({
-    email: yup
-      .string()
-      .email("Digite um email válido")
-      .required("Campo obrigatório"),
-    password: yup
-      .string()
-      .min(6, "senha de pelo menos 6 digitos")
-      .required("Campo obrigatório"),
-  });
-
+export const Main: React.FC<StateProps> = () => {
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
   });
@@ -31,7 +20,7 @@ export const Main: React.FC = () => {
   const [, setResult] = useState("");
   const history = useHistory();
 
-  const onSubmit = (user: Props): void => {
+  const onSubmit = (user: StateProps): void => {
     setResult(JSON.stringify(user));
     history.push("/users/:id");
     console.log(user);

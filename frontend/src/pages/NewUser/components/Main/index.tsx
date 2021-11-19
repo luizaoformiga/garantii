@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 
 import styles from "./main-styles.module.scss";
 import { Button } from "../../../../components";
+import { schema } from "../../../../validations/new-user";
+import { RepositoriesTypes, Repository } from "../../../../store/ducks/repositories/types";
+import store from "../../../../store";
 
 type Props = {
   name: string;
@@ -14,21 +16,6 @@ type Props = {
 };
 
 export const Main: React.FC = () => {
-  const schema = yup.object().shape({
-    name: yup
-      .string()
-      .min(2, "No Mínimo dois caracteres")
-      .required("Nome obrigatório"),
-    email: yup
-      .string()
-      .email("Digite um email válido")
-      .required("Email obrigatório"),
-    password: yup
-      .string()
-      .min(6, "senha de pelo menos 6 digitos")
-      .required("Senha obrigatória"),
-  });
-
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schema),
   });
@@ -36,8 +23,14 @@ export const Main: React.FC = () => {
   const history = useHistory();
   const [, setResult] = useState("");
 
+  const handleAddUser = (user?: Repository[]): void => {
+    store.dispatch({ type: RepositoriesTypes.USER_ADD, payload: [user] });
+    console.log("add", store.getState());
+  };
+
   const onSubmit = (user: Props): void => {
     if (user) {
+      handleAddUser()
       setResult(JSON.stringify(user));
       console.log(user);
       history.push("/");

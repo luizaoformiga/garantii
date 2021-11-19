@@ -1,12 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { isAuthenticated } from "../../services/auth";
-
-type Props = {
-  component: React.ComponentType<any>;
-  path: string;
-  exact?: boolean | undefined;
-};
+import { Props } from "../repository";
 
 const PublicRoute: React.FC<Props> = ({ component: Component, ...rest }) => (
   <Route
