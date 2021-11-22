@@ -1,25 +1,24 @@
-import { createStore, applyMiddleware, AnyAction, Store } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import reduxThunk, { ThunkMiddleware } from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import createSagaMiddleware from "redux-saga";
 
-import { RepositoriesState } from "./ducks/repositories/types";
+import { postsReducer } from "./reducers/postsReducer";
+import { PostsState } from "./reducers/types";
+import { PostsAction } from "./actions/types";
 
-import rootReducer from "./ducks/root-reducer";
-import { rootSaga } from "./ducks/root-saga";
-
-export interface ApplicationState {
-  repositories: RepositoriesState;
+export interface RootState {
+  readonly posts: PostsState;
 }
 
-const sagaMiddleware = createSagaMiddleware();
+const rootReducer = combineReducers<RootState>({
+  posts: postsReducer,
+});
 
-const middlewares = [sagaMiddleware];
+export type RootActions = PostsAction; // | CommentsAction | etc.
 
-const store: Store<ApplicationState, AnyAction> = createStore(
+export const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(...middlewares))
+  composeWithDevTools(
+    applyMiddleware(reduxThunk as ThunkMiddleware<RootState, RootActions>)
+  )
 );
-
-sagaMiddleware.run(rootSaga);
-
-export default store;

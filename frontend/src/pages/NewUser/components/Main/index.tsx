@@ -1,57 +1,75 @@
 import React, { useState } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { AxiosResponse } from "axios";
 
 import styles from "./main-styles.module.scss";
 import { Button } from "../../../../components";
-import { schema } from "../../../../validations/new-user";
-import { RepositoriesTypes, Repository } from "../../../../store/ducks/repositories/types";
-import store from "../../../../store";
+import { api } from "../../../../services/axios";
+import { ServerError } from "../../../../services/error";
 
 type Props = {
-  name: string;
-  email: string;
-  password: string;
+  id?: string;
+  name?: string;
+  email?: string
 };
 
-export const Main: React.FC = () => {
-  const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(schema),
+export const Main: React.FC<Props> = ({ children }) => {
+  const history = useHistory();
+  const [state, setState] = useState({
+    name: "",
+    email: "",
+    password: "",
   });
 
-  const history = useHistory();
-  const [, setResult] = useState("");
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
 
-  const handleAddUser = (user?: Repository[]): void => {
-    store.dispatch({ type: RepositoriesTypes.USER_ADD, payload: [user] });
-    console.log("add", store.getState());
-  };
+    const { name, email, password } = state;
 
-  const onSubmit = (user: Props): void => {
-    if (user) {
-      handleAddUser()
-      setResult(JSON.stringify(user));
-      console.log(user);
-      history.push("/");
+    const values = {
+      name: name,
+      email: email,
+      password: password,
+    };
+
+    if (!name || !email || !password) {
+      alert("preencha os dados");
     }
+
+    api
+      .post("/posts", values)
+      .then((response: AxiosResponse<Props>) =>
+        history.push(`/users/${response.data.id}`)
+      )
+      .catch(() => new ServerError("Not Found"));
   };
 
   return (
     <main className={styles.container}>
       <h2>Cadastre-se conosco!</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" {...register("name")} placeholder="Nome" />
-        {formState.errors.name?.message}
-        <input type="email" {...register("email")} placeholder="Email" />
-        {formState.errors.email?.message}
+      <form onSubmit={handleOnSubmit}>
+        <input
+          type="text"
+          placeholder="Nome"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setState({ ...state, name: event.target.value })
+          }
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setState({ ...state, email: event.target.value })
+          }
+        />
         <input
           type="password"
-          {...register("password")}
           placeholder="Password"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setState({ ...state, password: event.target.value })
+          }
         />
-        {formState.errors.password?.message}
         <Button title="Entrar" />
       </form>
     </main>

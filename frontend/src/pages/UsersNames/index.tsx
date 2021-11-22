@@ -10,7 +10,7 @@ export const UsersNames: React.FC = () => {
   return (
     <div>
       <Header title="USERS" />
-      <Main email="" name="" password="" />
+      <Main />
       <Footer />
     </div>
   );

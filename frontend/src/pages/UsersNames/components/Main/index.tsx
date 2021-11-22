@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { api } from "../../../../services/axios";
 import styles from "./main-styles.module.scss";
-import data from "../../../../services/users.json";
 
 type Props = {
   name: string;
@@ -8,13 +8,28 @@ type Props = {
   password: string;
 };
 
-export const Main: React.FC<Props> = ({ name, email, password }) => {
+export const Main: React.FC = () => {
+  const [state, setState] = useState<Array<any>>([]);
+
+  useEffect(() => {
+    async function getdata(): Promise<void> {
+      const response = await api
+        .get("/posts")
+        .then((res) => res.data)
+        .catch((err: Error) => err);
+
+      return setState(response);
+    }
+
+    getdata();
+  }, []);
+
   return (
     <main className={styles.container}>
       <h2>USUÁRIOS ATÉ O MOMENTO</h2>
       <div>
-        {data.users.map((user, index) => (
-          <div key={index}>
+        {state?.map((user: Props, index) => (
+          <div key={index} className={styles.card}>
             <p>Nome: {user.name}</p>
             <p>Email: {user.email}</p>
           </div>
