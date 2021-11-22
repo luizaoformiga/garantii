@@ -9,7 +9,7 @@ export const UsersNames: React.FC = () => {
 
   return (
     <div>
-      <Header title="USERS" />
+      <Header title="SAIR" />
       <Main />
       <Footer />
     </div>

@@ -37,9 +37,9 @@ export const Main: React.FC<Props> = ({ children }) => {
     }
 
     api
-      .post("/posts", values)
+      .post("/cadastrar", values)
       .then((response: AxiosResponse<Props>) =>
-        history.push(`/users/${response.data.id}`)
+        history.push(`/listar/${response.data.id}`)
       )
       .catch(() => new ServerError("Not Found"));
   };

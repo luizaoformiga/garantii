@@ -3,7 +3,7 @@ import styles from "./header-styles.module.scss";
 import { Logo } from "../../../../components";
 
 type Props = {
-  title: string;
+  title?: string;
 };
 
 export const Header: React.FC<Props> = ({ title }) => {
@@ -12,7 +12,7 @@ export const Header: React.FC<Props> = ({ title }) => {
       <div>
         <Logo />
       </div>
-      <a href="/newusers">{title}</a>
+      <a href="/">{title}</a>
     </header>
   );
 };

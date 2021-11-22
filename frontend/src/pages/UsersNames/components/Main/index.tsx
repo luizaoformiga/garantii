@@ -14,7 +14,7 @@ export const Main: React.FC = () => {
   useEffect(() => {
     async function getdata(): Promise<void> {
       const response = await api
-        .get("/posts")
+        .get("/listar")
         .then((res) => res.data)
         .catch((err: Error) => err);
 

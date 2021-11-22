@@ -12,9 +12,8 @@ export const Routes: React.FC = () => {
       <BrowserRouter>
         <Switch>
           <PublicRoute exact path="/" component={NewUsers} />
-         {/** <PublicRoute path="/newusers" component={NewUsers} /> */}
-          <PublicRoute path="/users/:id" component={Users} />
-          <PublicRoute path="/usernames" component={UsersNames} />
+          <PublicRoute path="/listar/:id" component={Users} />
+          <PublicRoute path="/listar" component={UsersNames} />
         </Switch>
       </BrowserRouter>
     </RecoilRoot>

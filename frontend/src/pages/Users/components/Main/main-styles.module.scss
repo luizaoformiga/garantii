@@ -9,29 +9,32 @@
   font-size: 25px;
   color: $black;
 
-  .card {
-    display: flex;
-    flex-direction: column;
-
-    border-radius: 5px;
-    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
-    padding: 30px;
-    margin: 20px;
-    width: 400px;
-    transition: all 0.3s ease-out;
-    border-left: 3px solid $blue;
-
-    &:hover {
-      transform: translateY(-5px);
-      cursor: pointer;
-      border-left: 3px solid $yellow;
-
-      transition: 0.3s;
-    }
-
-    p {
-      color: $grey;
-      font-size: 16px;
+  div {
+    .card {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+  
+      border-radius: 5px;
+      box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
+      padding: 30px;
+      margin: 20px;
+      width: 400px;
+      transition: all 0.3s ease-out;
+      border-left: 3px solid $blue;
+  
+      &:hover {
+        transform: translateY(-5px);
+        cursor: pointer;
+        border-left: 3px solid $yellow;
+  
+        transition: 0.3s;
+      }
+  
+      p {
+        color: $grey;
+        font-size: 16px;
+      }
     }
   }
 }

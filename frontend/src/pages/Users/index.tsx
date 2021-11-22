@@ -9,23 +9,31 @@ import { Header, Main } from "./components";
 import styles from "./user-styles.module.scss";
 
 type Props = {
-  id: string;
+  id: number;
   name: string;
   email: string;
 };
 
+type RouteProps = {
+  id: string;
+};
+
 export const Users: React.FC = () => {
-  const { id } = useParams<Props>();
+  const { id } = useParams<any>();
   const [user, setUser] = useState<Props>({} as Props);
 
   useEffect(() => {
     async function getdata() {
-      const response: AxiosResponse<any, any> = await api.get("/posts");
-      const allUsers: Props[] = response.data as Props[];
-      const [userFiltered] = allUsers.filter((user) =>
-        user.id === id ? Number.parseInt(id) : null
-      );
-      setUser(userFiltered);
+      const response: any = await api.get(`/listar/${id}`);
+      
+      /**
+        const allUsers: Props[] = response.data as Props[];
+        const [userFiltered] = allUsers.filter((user) => user.id === Number(id));
+        setUser(userFiltered); 
+      */
+
+      setUser(response);
+      console.log("user", id);
     }
 
     getdata();
@@ -42,7 +50,6 @@ export const Users: React.FC = () => {
       <Main
         name={user?.name}
         email={user?.email}
-        children={id ? Number.parseInt(id) : null}
       />
       <Footer />
     </div>
