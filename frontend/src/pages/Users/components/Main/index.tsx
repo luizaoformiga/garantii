@@ -15,15 +15,13 @@ export const Main: React.FC<Props> = (props) => {
   const [, setState] = useState<Array<string>>([]);
 
   useEffect(() => {
-    async function getdata(): Promise<void> {
+    (async function getdata(): Promise<void> {
       const response = await api
         .get("/listar")
         .then((res: AxiosResponse) => res.data)
         .catch(() => new ServerError("Not found"));
-      setState(response);
-    }
-
-    getdata();
+      setState(prevState => prevState = response);
+    })()
   }, []);
 
   return (

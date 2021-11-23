@@ -12,16 +12,14 @@ export const Main: React.FC = () => {
   const [state, setState] = useState<Array<any>>([]);
 
   useEffect(() => {
-    async function getdata(): Promise<void> {
+    (async function getdata(): Promise<void> {
       const response = await api
         .get("/listar")
         .then((res) => res.data)
         .catch((err: Error) => err);
 
-      return setState(response);
-    }
-
-    getdata();
+      return setState(prevState => prevState = response);
+    })()
   }, []);
 
   return (
