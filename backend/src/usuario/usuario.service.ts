@@ -18,8 +18,7 @@ export class UsuarioService {
     return this.usuarioRepository.find();
   }
   
-  @Get(":id")
-  async listarUser(@Param("id") id): Promise<any> {
+  async listarUser(id: number): Promise<any> {
     return this.usuarioRepository.findOne(id);
   }
 
@@ -45,7 +44,7 @@ export class UsuarioService {
       });
   }
 
-  async findOne(email: string): Promise<Usuario | undefined> {
-    return this.usuarioRepository.findOne({ email: email });
+  async findOne(id: number): Promise<Usuario | undefined> {
+    return this.usuarioRepository.findOne({ id: id });
   }
 }

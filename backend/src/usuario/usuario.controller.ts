@@ -25,7 +25,7 @@ export class UsuarioController {
   }
 
   @Get(UsuarioEnum.USER_LISTEN_ID)
-  async listarUser(@Param(":id") id): Promise<Usuario[]> {
+  async listarUser(@Param("id") id: number): Promise<Usuario[]> {
     return this.usuarioService.listarUser(id);
   }
 
