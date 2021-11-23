@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { AxiosResponse } from "axios";
 
 import { Footer } from "../../components";
 import { api } from "../../services/axios";
@@ -14,30 +13,18 @@ type Props = {
   email: string;
 };
 
-type RouteProps = {
-  id: string;
-};
-
 export const Users: React.FC = () => {
   const { id } = useParams<any>();
   const [user, setUser] = useState<Props>({} as Props);
 
   useEffect(() => {
-    async function getdata() {
+    (async function getdata(): Promise<void> {
       const response: any = await api.get(`/listar/${id}`);
-      
-      /**
-        const allUsers: Props[] = response.data as Props[];
-        const [userFiltered] = allUsers.filter((user) => user.id === Number(id));
-        setUser(userFiltered); 
-      */
 
-      setUser(response);
-      console.log("user", id);
-    }
-
-    getdata();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      setUser(prevState => prevState = response);
+    })()
+    console.log(id)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
